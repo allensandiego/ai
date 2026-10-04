@@ -1,0 +1,98 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "edit": {
+      "pom.xml": "deny"
+    }
+  },
+  "provider": {
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://amd.lan:1234/v1"
+      },
+      "models": {
+        "prism-ml/bonsai-27b": {
+          "name": "Bonsai 27b",
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "glm-4.7-flash-reap-23b-a3b": {
+          "name": "GLM4.7 Flash 23b a3b",
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "qwen3.6-35b-a3b-mtp": {
+          "name": "Qwen3.6 35b a3b",
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "qwen3.5-9b-mtp": {
+          "name": "Qwen3.5 9b",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "qwen3.5-4b-mtp": {
+          "name": "Qwen3.5 4b",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "gemma-4-12b-it": {
+          "name": "Gemma 4 12b",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "ornith-1.5-9b": {
+          "name": "Ornith 1.5 9b",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "gemma-4-e4b-it": {
+          "name": "Gemma 4 e4b",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        }
+      }
+    }
+  }
+}
