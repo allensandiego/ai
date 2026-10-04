@@ -97,13 +97,7 @@ The default GitHub Copilot skills pattern is: `/speckit-...`; the reference docs
 For this project, the recommended constitution command is:
 
 ```text
-/speckit-constitution This repository is a benchmark template for evaluating how well local AI systems can turn a starter codebase into a complete, runnable application. We prioritize correctness, buildability, and end-to-end functionality over demo-only code. Use Java 21 with Spring Boot and Maven, keep the application runnable and testable, and favor clear separation between backend logic, persistence, security, and frontend integration. All features must be grounded in real project structure and must work in the actual app, not just in isolated examples. Prefer minimal, maintainable dependencies, secure defaults, and well-scoped implementation steps. Validate changes with build and test evidence, and document assumptions when the codebase is intentionally incomplete or scaffolded for benchmarking.
-```
-
-Equivalent canonical dot-form command:
-
-```text
-/speckit.constitution This repository is a benchmark template for evaluating how well local AI systems can turn a starter codebase into a complete, runnable application. We prioritize correctness, buildability, and end-to-end functionality over demo-only code. Use Java 21 with Spring Boot and Maven, keep the application runnable and testable, and favor clear separation between backend logic, persistence, security, and frontend integration. All features must be grounded in real project structure and must work in the actual app, not just in isolated examples. Prefer minimal, maintainable dependencies, secure defaults, and well-scoped implementation steps. Validate changes with build and test evidence, and document assumptions when the codebase is intentionally incomplete or scaffolded for benchmarking.
+/speckit.constitution Build a working Spring Boot 4.1.1 application using Java 21, Thymeleaf, CoreUI Bootstrap 5, H2, JDBC authentication, and Java Playwright E2E testing. Prioritize correctness, buildability, and end-to-end functionality over demo-only code. Work from the actual project structure and schema.sql data model instead of inventing unrelated patterns. Keep the backend, persistence, security, and frontend integration consistent, predictable, and runnable. Prefer explicit service boundaries, schema-compatible database changes, and maintainable integration between controllers, templates, and data access. Validate every implementation with real build, runtime, and E2E evidence before claiming completion. If the repo is intentionally incomplete or scaffolded, fill the gaps without breaking the application or introducing hidden assumptions.
 ```
 
 ## Benchmark use case

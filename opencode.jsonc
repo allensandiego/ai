@@ -10,7 +10,7 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://amd.lan:1234/v1"
+        "baseURL": "http://localhost:1234/v1"
       },
       "models": {
         "prism-ml/bonsai-27b": {
