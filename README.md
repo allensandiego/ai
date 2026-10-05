@@ -100,6 +100,18 @@ For this project, the recommended constitution command is:
 /speckit.constitution Build a working Spring Boot 4.1.1 application using Java 21, Thymeleaf, CoreUI Bootstrap 5, H2, JDBC authentication, and Java Playwright E2E testing. Prioritize correctness, buildability, and end-to-end functionality. Work from the actual project structure and schema.sql data model instead of inventing unrelated patterns. Keep the backend, persistence, security, and frontend integration consistent, predictable, and runnable. Prefer explicit service boundaries, schema-compatible database changes, and maintainable integration between controllers, templates, and data access. Validate every implementation with real build, runtime, and E2E evidence before claiming completion. If the repo is intentionally incomplete or scaffolded, fill the gaps without breaking the application or introducing hidden assumptions.
 ```
 
+For this project, the recommended specify command is:
+
+```text
+/speckit.specify Build a login, registration, and password reset flow for the Spring Boot app using the existing authentication templates and H2 schema. Use the `users` table for JDBC authentication, keep the flow simple without email verification, and validate the pages with Playwright browser tests.
+```
+
+For this project, the recommended plan command is:
+
+```text
+/speckit.plan Implement a working Spring JDBC authentication flow for the app using the existing CoreUI authentication templates and the H2 schema. Create login, registration, and password reset pages that match the current project structure, wire in the required controllers and service logic, and validate the flow with Playwright E2E tests that capture screenshots. Ensure the application builds and runs cleanly without introducing unrelated features.
+```
+
 ## Benchmark use case
 
 This repo is meant to be used as a starting template for evaluating whether a local AI can complete a full-stack implementation. A benchmark run may include tasks such as:
