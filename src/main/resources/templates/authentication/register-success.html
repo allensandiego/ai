@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset Successful - AI Application</title>
+    <title>Registration Successful - AI Application</title>
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
     <style>
         body {
@@ -36,14 +36,6 @@
             margin-bottom: 1.5rem;
             line-height: 1.5;
         }
-        .info-box {
-            background-color: #e7f3ff;
-            border-left: 4px solid #0d6efd;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            text-align: left;
-            font-size: 0.875rem;
-        }
         .btn-primary {
             padding: 0.5rem 2rem;
             font-size: 1rem;
@@ -62,16 +54,10 @@
 <body>
     <div class="success-card">
         <div class="success-icon">✓</div>
-        <h2>Password Reset Successful!</h2>
+        <h2>Registration Successful!</h2>
         <p class="success-message">
-            Your password has been reset. You can now log in with your username and the new password.
+            Your account has been created. You can now log in with your credentials.
         </p>
-        
-        <div class="info-box">
-            <strong>Your new password is:</strong><br>
-            <code th:text="${newPassword}">NEW_PASSWORD</code>
-        </div>
-        
         <a th:href="@{/login}" class="btn-primary">Go to Login</a>
     </div>
 </body>

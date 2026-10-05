@@ -103,7 +103,7 @@ For this project, the recommended constitution command is:
 For this project, the recommended specify command is:
 
 ```text
-/speckit.specify Implement user authentication pages and flows for login, registration, and password reset. Store user accounts in the existing `users` table and use JDBC authentication. Hash passwords with BCrypt; never store plaintext passwords. Allow users to reset their password without email confirmation. Do not implement account lockout, password expiration, or authentication auditing.
+/speckit.specify Implement user authentication pages and flows for login, registration, and password reset. Store user accounts in the existing `users` table and use JDBC authentication. Hash passwords with BCrypt; never store plaintext passwords. Allow users to reset their password without email confirmation. Do not implement account lockout, password expiration, or authentication auditing. Use command `nohup ./mvnw spring-boot:run > app.log 2>&1 &` to start the application if the application has not been started. Always check the file `app.log` for any errors.
 ```
 
 ## Benchmark use case
