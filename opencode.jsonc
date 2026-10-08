@@ -30,11 +30,25 @@
           }
         },
         "qwen3.6-35b-a3b-mtp": {
-          "name": "Qwen3.6 35b a3b",
+          "name": "Qwen3.6 35b a3b mtp",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
           "limit": {
             "context": 65536,
             "input": 49162,
             "output": 16384
+          }
+        },
+        "qwen3.6-35b-a3b": {
+          "name": "Qwen3.6 35b a3b",
+          "modalities": {
+            "input": [ "text","image","audio","video" ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 65536,
+            "output": 65536
           }
         },
         "qwen3.5-9b-mtp": {
