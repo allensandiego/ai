@@ -13,12 +13,12 @@
         "baseURL": "http://localhost:1234/v1"
       },
       "models": {
-        "prism-ml/bonsai-27b": {
-          "name": "Bonsai 27b",
+        "qwen3.8-27b-gsq-rco": {
+          "name": "Qwen3.8 27B",
           "limit": {
-            "context": 65536,
-            "input": 49162,
-            "output": 16384
+            "context": 32768,
+            "input": 16384,
+            "output": 8192
           }
         },
         "glm-4.7-flash-reap-23b-a3b": {
