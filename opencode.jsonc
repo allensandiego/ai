@@ -16,9 +16,9 @@
         "qwen3.8-27b-gsq-rco": {
           "name": "Qwen3.8 27B",
           "limit": {
-            "context": 32768,
-            "input": 16384,
-            "output": 8192
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
           }
         },
         "glm-4.7-flash-reap-23b-a3b": {
