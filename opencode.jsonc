@@ -16,8 +16,7 @@
         "qwen3.8-27b-gsq-rco": {
           "name": "Qwen3.8 27B",
           "limit": {
-            "context": 65536,
-            "input": 49162,
+            "context": 98304,
             "output": 16384
           }
         },
