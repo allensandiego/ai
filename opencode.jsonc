@@ -10,7 +10,7 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://localhost:1234/v1"
+        "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
         "qwen3.8-27b-gsq-rco": {
@@ -18,6 +18,24 @@
           "limit": {
             "context": 98304,
             "output": 16384
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "variants": {
+            "thinking": {
+              "enabled_thinking": true,
+              "reasoning_effort": "xhigh"
+            },
+            "fast": {
+              "enabled_thinking": false,
+              "reasoning_effort": "none"
+            }
           }
         },
         "glm-4.7-flash-reap-23b-a3b": {
@@ -31,7 +49,12 @@
         "qwen3.6-35b-a3b-mtp": {
           "name": "Qwen3.6 35b a3b mtp",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ],
           },
           "limit": {
             "context": 65536,
@@ -42,7 +65,12 @@
         "qwen3.6-35b-a3b": {
           "name": "Qwen3.6 35b a3b",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 131072,
@@ -53,7 +81,12 @@
         "qwen3.5-9b-mtp": {
           "name": "Qwen3.5 9b",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 131072,
@@ -64,7 +97,12 @@
         "qwen3.5-4b-mtp": {
           "name": "Qwen3.5 4b",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 65536,
@@ -75,7 +113,12 @@
         "gemma-4-12b-it": {
           "name": "Gemma 4 12b",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 65536,
@@ -86,7 +129,12 @@
         "ornith-1.5-9b": {
           "name": "Ornith 1.5 9b",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 131072,
@@ -97,7 +145,12 @@
         "gemma-4-e4b-it": {
           "name": "Gemma 4 e4b",
           "modalities": {
-            "input": [ "text","image","audio","video" ]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 131072,
