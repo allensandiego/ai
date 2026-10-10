@@ -14,15 +14,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/public/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/authentication/**", "/public/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")
+                .loginPage("/authentication/login")
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/logout")
+                .logoutUrl("/authentication/logout")
                 .permitAll()
             )
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
