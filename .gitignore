@@ -40,3 +40,5 @@ build/
 
 /target
 nohup.out
+app.log
+
