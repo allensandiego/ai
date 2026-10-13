@@ -42,3 +42,6 @@ build/
 nohup.out
 app.log
 
+### Spec Kit / Governance ###
+.specify/memory/constitution.md
+
