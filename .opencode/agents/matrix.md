@@ -11,7 +11,7 @@ repetition_penalty: 1.0
 presence_penalty: 0.0
 reasoning:
   effort: none
-steps: 20
+steps: 50
 stream: false
 permission:
   "*": deny

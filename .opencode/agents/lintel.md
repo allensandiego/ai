@@ -8,7 +8,7 @@ top_p: 0.95
 top_k: 64
 reasoning: 
   effort: medium
-steps: 20
+steps: 50
 stream: true
 permission:
   "*": deny
