@@ -36,11 +36,38 @@ This makes it useful for testing whether local AI can:
 
 ## Project structure
 
-- `pom.xml` — Maven build configuration and dependencies
-- `src/main/java` — application source code
-- `src/main/resources` — configuration, templates, and static assets
-- `src/test/java` — test suite and validation code
-- `coreui/` — dashboard UI template assets
+Resolve the repository root with `git rev-parse --show-toplevel` from the active
+workspace; do not assume a machine-specific path. Repository-wide agent
+boundaries are defined in `AGENTS.md`.
+
+The current application layout is:
+
+```text
+<repository-root>/
+├── AGENTS.md                 # Repository-wide agent instructions
+├── .opencode/commands/       # Repository slash-command definitions
+├── pom.xml                   # Maven configuration and dependencies
+├── mvnw                      # Maven wrapper
+└── src/
+    ├── main/
+    │   ├── java/com/allensandiego/ai/
+    │   │   ├── AiApplication.java
+    │   │   ├── config/
+    │   │   └── controller/
+    │   └── resources/
+    │       ├── application.properties
+    │       ├── schema.sql
+    │       ├── data.sql
+    │       ├── static/
+    │       └── templates/
+    └── test/java/com/allensandiego/ai/
+```
+
+This tree describes the current checkout, not a requirement to create every
+listed or anticipated layer. Inspect the source, configuration, tests, and
+`schema.sql` before changing them. Add new code and directories only as needed,
+following the existing Java package and Maven layout. Keep generated files,
+including Playwright screenshots, inside the repository (prefer `target/`).
 
 ## Quick start
 
@@ -97,7 +124,21 @@ The default GitHub Copilot skills pattern is: `/speckit-...`; the reference docs
 For this project, the recommended constitution command is:
 
 ```text
-/speckit.constitution Build a working Spring Boot 4.1.1 application using Java 21, Thymeleaf, CoreUI Admin Template Bootstrap 5, H2, JDBC authentication, and Java Playwright E2E testing. Prioritize correctness, buildability, and end-to-end functionality. Work from the actual project structure and schema.sql data model instead of inventing unrelated patterns. Keep the backend, persistence, security, and frontend integration consistent, predictable, and runnable. Prefer explicit service boundaries, schema-compatible database changes, and maintainable integration between controllers, templates, and data access. Validate every implementation with real build, runtime, and E2E evidence before claiming completion. If the repo is intentionally incomplete or scaffolded, fill the gaps without breaking the application or introducing hidden assumptions.
+/speckit.constitution
+
+Establish the principles for building and maintaining this application:
+
+- Use Java 21 and Spring Boot 4.1.1. Keep dependencies and configuration compatible with those versions; do not silently downgrade or substitute the requested stack.
+- Build a server-rendered web application with Thymeleaf. Use CoreUI Admin components styled with Bootstrap 5, and HTMX for focused interactions and partial-page updates. Preserve accessible, usable behavior without JavaScript where practical.
+- Use Spring Security with JDBC-backed authentication. Rely on Spring Security’s established authentication and password-encoding mechanisms; do not create custom authentication or store plaintext passwords. Preserve CSRF protection, including for HTMX requests.
+- Use H2 only for local development and local tests. Keep database configuration profile-based and externalizable so non-local environments can supply their own database configuration. Do not treat H2 as the production database.
+- Use the repository’s existing structure, conventions, and `schema.sql` data model when present. Inspect them before changing persistence or inventing new entities and tables. Keep schema, JDBC access, services, security, and UI behavior consistent. If required project structure or schema is absent, establish only what the requested feature needs.
+- Treat the active Git repository root as the project boundary. Resolve its absolute path from the workspace/Git metadata; do not hard-code a machine-specific path or access sibling projects and unrelated directories. Follow the existing layout documented above.
+- Keep clear boundaries between controllers, services, persistence, security, and templates. Prefer simple, explicit code and established Spring patterns over unnecessary abstractions or custom frameworks.
+- Make the application reproducibly buildable and runnable. Add or update focused tests for meaningful behavior and run the relevant build and test checks after changes. Do not hide errors behind silent fallbacks.
+- Use Java Playwright for end-to-end browser tests. Verify key user flows against the running application, and capture screenshots under `target/playwright/screenshots/` with predictable names. Keep tests reliable and avoid dependence on external services.
+- Protect user data and credentials. Do not commit secrets, default production credentials, or environment-specific sensitive configuration.
+- Update documentation when setup, configuration, database behavior, or test workflows change. Document the commands needed to run locally, test, and produce Playwright screenshots.
 ```
 
 ## Benchmark use case
