@@ -11,7 +11,6 @@ repetition_penalty: 1.0
 presence_penalty: 0.5
 reasoning:
   effort: high
-steps: 20
 permission:
   bash: deny
   edit: deny
