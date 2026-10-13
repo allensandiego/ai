@@ -10,7 +10,7 @@ min_p: 0.0
 repetition_penalty: 1.0
 presence_penalty: 0.5
 reasoning:
-  effort: high
+  effort: xhigh
 permission:
   bash: deny
   edit: deny
