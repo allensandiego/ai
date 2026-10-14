@@ -1,2 +1,3 @@
+-- Insert an admin user with a hashed password (password123)
 insert into users (username, password, email) values
-  ('admin', '$2a$10$R9hazG9A3O1v.g4vSHD8B.B5Y6KevS8k6X1w/gG.6L99J1/D1G8ii', 'admin@example.com');
+  ('admin', '$2a$10$9gVowZYyIn0LEP/pOeU2mu6869gQ8C7kfVmYUfpoVZEk8EIhqkLxG', 'admin@example.com');

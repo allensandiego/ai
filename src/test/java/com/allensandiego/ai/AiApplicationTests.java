@@ -25,6 +25,7 @@ class AiApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
 	}
 
 	@Test
