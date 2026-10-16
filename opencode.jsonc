@@ -13,6 +13,13 @@
         "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
+        "qwen3.8-9b-distill": {
+          "name": "Qwen3.8 9B",
+          "limit": {
+            "context": 98304,
+            "output": 16384
+          }
+        },
         "qwen3.8-27b-gsq-rco": {
           "name": "Qwen3.8 27B",
           "limit": {
