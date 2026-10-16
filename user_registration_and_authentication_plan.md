@@ -80,20 +80,6 @@ flowchart TD
 
 ---
 
-### Dependency & Build
-
-#### [MODIFY] [pom.xml](file:///home/allen/workspace/ai/pom.xml)
-- Add `spring-boot-starter-validation` to support Jakarta validation annotations (`@NotBlank`, `@Email`, `@Size`) on form DTOs.
-
-```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-validation</artifactId>
-</dependency>
-```
-
----
-
 ### Database & Configuration
 
 #### [MODIFY] [schema.sql](file:///home/allen/workspace/ai/src/main/resources/schema.sql)
