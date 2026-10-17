@@ -37,7 +37,7 @@ class AiApplicationTests {
 				 new BrowserType.LaunchOptions().setHeadless(true))) {
 			Page page = browser.newPage();
 			var response = page.navigate(
-				"http://localhost:" + port + "/login",
+				"http://localhost:" + port + "/authentication/login",
 				new Page.NavigateOptions().setWaitUntil(WaitUntilState.NETWORKIDLE)
 			);
 
