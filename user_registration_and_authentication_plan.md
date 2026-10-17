@@ -269,6 +269,7 @@ All templates leverage the project's **CoreUI 5.6.1 Admin Template** CSS and Jav
 4. **Full Test Suite & Package Build**:
    - `./mvnw test`
    - `./mvnw package`
+   - `nohup ./mvnw spring-boot:run > app.log 2>&1 &` then check `./app.log` file for errors.
 
 ### Manual Verification
 1. Run `./mvnw spring-boot:run`.

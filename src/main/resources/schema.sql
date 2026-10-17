@@ -1,6 +1,6 @@
-drop table if exists user;
+drop table if exists users;
 
-create table user (
+create table users (
   id bigint primary key auto_increment,
   username varchar(255) not null unique,
   password varchar(255) not null,
