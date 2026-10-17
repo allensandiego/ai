@@ -8,7 +8,7 @@
     "edit": {
       "pom.xml": "deny",
       "mvnw": "deny",
-      "mvnw.cmd": "deny"
+      "mvnw.cmd": "deny",
       "/home/allen/m.2/**": "deny"
     }
   },
