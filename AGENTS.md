@@ -29,12 +29,8 @@ src/                              # Application source and tests
 │   │   └── com/                  # Java package namespace
 │   │       └── allensandiego/    # Organization package
 │   │           └── ai/           # Application package and entry point
-│   │               ├── config/   # Spring and security configuration
-│   │               ├── controller/ # Web request handlers
-│   │               ├── dto/      # Data transfer objects
-│   │               ├── model/    # Domain and persistence models
-│   │               ├── repository/ # Data access interfaces
-│   │               └── service/  # Application business logic
+│   │               ├── config/     # Spring and security configuration
+│   │               └── controller/ # Web request handlers
 │   └── resources/                # Runtime configuration and web resources
 │       ├── static/               # Public static assets
 │       │   ├── css/              # Stylesheets
