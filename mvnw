@@ -29,8 +29,6 @@
 #   MVNW_VERBOSE - true: enable verbose log; debug: trace the mvnw script; others: silence the output
 # ----------------------------------------------------------------------------
 
-true > app.log
-
 set -euf
 [ "${MVNW_VERBOSE-}" != debug ] || set -x
 
@@ -147,14 +145,38 @@ distributionUrlNameMain="${distributionUrlNameMain%-bin}"
 MAVEN_USER_HOME="${MAVEN_USER_HOME:-${HOME}/.m2}"
 MAVEN_HOME="${MAVEN_USER_HOME}/wrapper/dists/${distributionUrlNameMain-}/$(hash_string "$distributionUrl")"
 
+spring_boot_run_requested() {
+  for argument do
+    [ "$argument" = spring-boot:run ] && return 0
+  done
+  return 1
+}
+
+spring_boot_run_already_running() {
+  command -v pgrep >/dev/null 2>&1 || return 1
+  for pid in $(pgrep -f '[o]rg.codehaus.plexus.classworlds.launcher.Launcher spring-boot:run' || :); do
+    if ps -ww -p "$pid" -o command= | grep -F -e "-Dmaven.multiModuleProjectDirectory=$PWD" >/dev/null; then
+      return 0
+    fi
+  done
+  return 1
+}
+
 exec_maven() {
   unset MVNW_VERBOSE MVNW_USERNAME MVNW_PASSWORD MVNW_REPOURL || :
-  exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
+  if spring_boot_run_requested "$@" && spring_boot_run_already_running; then
+    printf '%s\n' "Spring Boot is already running for this project; monitor the app.log file."
+    return 0
+  fi
+  # exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
+  nohup "$MAVEN_HOME/bin/$MVN_CMD" "$@" > app.log 2>&1 </dev/null &
+  printf '%s\n' "Maven command started in the background; monitor the app.log file."
 }
 
 if [ -d "$MAVEN_HOME" ]; then
   verbose "found existing MAVEN_HOME at $MAVEN_HOME"
   exec_maven "$@"
+  exit 0
 fi
 
 case "${distributionUrl-}" in
