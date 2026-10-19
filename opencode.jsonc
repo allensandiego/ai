@@ -3,10 +3,9 @@
   "permission": {
     "external_directory": {
       "/tmp/**": "allow",
-      "/home/allen/m.2/**": "allow",
+      "/home/allen/m.2/**": "allow"
     },
     "edit": {
-      "pom.xml": "deny",
       "mvnw": "deny",
       "mvnw.cmd": "deny",
       "/home/allen/m.2/**": "deny"
@@ -166,6 +165,30 @@
               "video"
             ]
           },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "google/gemma-4-26b-a4b-qat": {
+          "name": "Gemma 4 26b A4B QAT",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 32768
+          }
+        },
+        "openai/gpt-oss-20b": {
+          "name": "GPT OSS 20b",
           "limit": {
             "context": 131072,
             "input": 98304,

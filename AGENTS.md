@@ -13,7 +13,10 @@ Thymeleaf, Spring Security, Spring Data JPA, and H2.
 - **Database:** H2.
 - **Server-rendered UI:** Thymeleaf with Spring Security integration.
 - **Frontend assets:** CoreUI 5.6.1, CSS, and JavaScript; dashboard charts use
-  Chart.js.
+  Chart.js. Refer to the following existing coreui templates.
+    - **./coreui/components/*.html**  Components like tables, cards, badge, buttons etc.
+    - **./coreui/*.html** Pages for charts, wdigets, blank (base) etc.
+    - **./coreui/error-pages/*.html** For error pages.
 - **Testing:** Spring Boot test starters and Playwright 1.63.0.
 - **Development support:** Spring Boot DevTools and Lombok.
 
@@ -38,7 +41,7 @@ src/                              # Application source and tests
 │       │   │   └── vendors/      # Third-party stylesheets
 │       │   └── js/               # Browser-side JavaScript
 │       └── templates/            # Thymeleaf page templates
-│           └── authentication/   # Authentication-related pages
+│           └── authentication/   # Authentication-related pages. Modify as needed.
 └── test/                         # Test source code and resources
     └── java/                     # Java tests
         └── com/                  # Test Java package namespace
