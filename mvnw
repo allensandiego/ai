@@ -29,6 +29,8 @@
 #   MVNW_VERBOSE - true: enable verbose log; debug: trace the mvnw script; others: silence the output
 # ----------------------------------------------------------------------------
 
+true > app.log
+
 set -euf
 [ "${MVNW_VERBOSE-}" != debug ] || set -x
 

@@ -55,4 +55,24 @@ class AiApplicationTests {
 
 		assertTrue(Files.size(screenshot) > 0, "The screenshot should not be empty");
 	}
+
+	@Test
+	void seededAdminCanLogInWithPassword123() {
+		try (Playwright playwright = Playwright.create();
+			 Browser browser = playwright.chromium().launch(
+				 new BrowserType.LaunchOptions().setHeadless(true))) {
+			Page page = browser.newPage();
+			page.navigate("http://localhost:" + port + "/authentication/login");
+
+			page.getByLabel("Username or email").fill("admin");
+			page.getByLabel("Password").fill("password123");
+			page.getByRole(
+				AriaRole.BUTTON,
+				new Page.GetByRoleOptions().setName("Sign in")
+			).click();
+			page.waitForURL("http://localhost:" + port + "/");
+
+			assertTrue(page.getByText("admin").isVisible());
+		}
+	}
 }
