@@ -1,6 +1,23 @@
 <!--
-Sync Impact Report
-- Version change: (none) → 1.0.0 (initial ratification of scaffold)
+Sync Impact Report (1.0.0 → 1.0.1, 2026-10-19)
+- Version change: 1.0.0 → 1.0.1
+- Modified principles:
+  - II. Convention-Aligned Architecture: package list corrected to the actual
+    layout (config, controller); new packages remain subject to the YAGNI
+    justification rule.
+  - III. Data Integrity and Schema Care: documented dev-time exception for
+    ddl-auto=create schema reset with re-seeding; deployments beyond local
+    development require non-destructive DDL plus explicit migrations.
+- Modified sections:
+  - Quality Gates: gate 1 is now `./mvnw verify` (replaces a run command that
+    never terminates).
+- Added sections: none
+- Removed sections: none
+- Deferred items:
+  - TODO(RATIFICATION_DATE): original adoption date unknown; pending
+    maintainer approval. Update the Version line once confirmed.
+
+Prior sync impact report ((none) → 1.0.0, initial ratification of scaffold)
 - Modified principles: none (scaffold was unpopulated)
 - Added sections:
   - Core Principles (I. Secure by Default, II. Convention-Aligned Architecture,
@@ -11,9 +28,6 @@ Sync Impact Report
   - Quality Gates
   - Governance
 - Removed sections: none
-- Deferred items:
-  - TODO(RATIFICATION_DATE): original adoption date unknown; pending
-    maintainer approval. Update the Version line once confirmed.
 -->
 
 # AI (com.allensandiego:ai) Constitution
@@ -45,10 +59,9 @@ depending on individual feature discipline.
 ### II. Convention-Aligned Architecture
 
 - Code MUST live in the existing package layout under
-  `com.allensandiego.ai` (`config`, `controller`, `dto`, `model`,
-  `repository`, `service`) and follow the Spring MVC layering already in
-  use: controllers handle HTTP concerns, services hold business logic,
-  repositories own data access.
+  `com.allensandiego.ai` (`config`, `controller`) and follow Spring MVC
+  layering: controllers handle HTTP concerns; any service or repository
+  layers introduced later hold business logic and data access respectively.
 - New layers, packages, or abstractions MUST be justified by a concrete
   need present in the change; empty or speculative layers MUST NOT be
   created "for future use" (YAGNI).
@@ -72,7 +85,10 @@ preserves the framework's safety nets.
 - Schema changes MUST be backward-compatible with existing data within a
   release unless an explicit, documented migration step is included;
   destructive changes (dropping columns/tables, narrowing types) MUST
-  state the migration or recovery plan.
+  state the migration or recovery plan. The dev-time reset performed by
+  `ddl-auto=create` with re-seeding from `data.sql` on each local start is a
+  documented exception to this rule; any deployment beyond local development
+  MUST use non-destructive DDL plus explicit migrations.
 - Entity mappings MUST match the actual schema (column names, types,
   constraints, and relationships); schema and ORM drift MUST be fixed,
   not papered over with permissive mappings.
@@ -169,7 +185,7 @@ amendment but MUST still pass the full test suite.
 
 Every change MUST satisfy all of the following before merge:
 
-1. **Build and run**: `./mvnw package && ./mvnw spring-boot:run` completes without errors.
+1. **Build**: `./mvnw verify` completes without errors (build plus full test suite).
 2. **Tests**: `./mvnw test` passes with no unexplained skips; new behavior
    has matching test coverage per Principle V.
 3. **Security review**: no new secrets committed; access-control and
@@ -211,6 +227,6 @@ change approval.
 - **Runtime guidance**: day-to-day development conventions (commands,
   layout) live in `AGENTS.md` and MUST NOT contradict this constitution.
 
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original
+**Version**: 1.0.1 | **Ratified**: TODO(RATIFICATION_DATE): original
 adoption date unknown; pending maintainer approval | **Last Amended**:
-2026-10-16
+2026-10-19

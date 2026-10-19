@@ -6,7 +6,6 @@
       "/home/allen/m.2/**": "allow"
     },
     "edit": {
-      "pom.xml": "deny",
       "mvnw": "deny",
       "mvnw.cmd": "deny",
       "/home/allen/m.2/**": "deny"
@@ -20,33 +19,26 @@
         "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
-        "qwen3.8-9b-distill": {
-          "name": "Qwen3.8 9B",
-          "limit": {
-            "context": 98304,
-            "output": 16384
-          }
-        },
-        "qwen3.8-27b-gsq-rco": {
+        "qwen3.8-27b-gsq-rco@iq3_xxs": {
           "name": "Qwen3.8 27B",
           "limit": {
-            "context": 98304,
+            "context": 131072,
             "output": 16384
           },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
-          },
           "variants": {
-            "thinking": {
+            "xhigh": {
               "enabled_thinking": true,
               "reasoning_effort": "xhigh"
             },
-            "fast": {
+            "medium": {
+              "enabled_thinking": true,
+              "reasoning_effort": "medium"
+            },
+            "low": {
+              "enabled_thinking": true,
+              "reasoning_effort": "low"
+            },
+            "off": {
               "enabled_thinking": false,
               "reasoning_effort": "none"
             }
