@@ -152,24 +152,23 @@ spring_boot_run_requested() {
   return 1
 }
 
-spring_boot_run_already_running() {
-  command -v pgrep >/dev/null 2>&1 || return 1
-  for pid in $(pgrep -f '[o]rg.codehaus.plexus.classworlds.launcher.Launcher spring-boot:run' || :); do
-    if ps -ww -p "$pid" -o command= | grep -F -e "-Dmaven.multiModuleProjectDirectory=$PWD" >/dev/null; then
-      return 0
-    fi
+stop_port_8080_processes() {
+  command -v lsof >/dev/null 2>&1 || die "lsof is required to check port 8080"
+  pids=$(lsof -ti tcp:8080 || :)
+  for pid in $pids; do
+    kill "$pid" 2>/dev/null || die "cannot terminate process $pid on port 8080"
   done
-  return 1
 }
 
 exec_maven() {
   unset MVNW_VERBOSE MVNW_USERNAME MVNW_PASSWORD MVNW_REPOURL || :
-  if spring_boot_run_requested "$@" && spring_boot_run_already_running; then
-    printf '%s\n' "Spring Boot is already running for this project."
-    return 0
+  if spring_boot_run_requested "$@"; then
+    stop_port_8080_processes
   fi
   mkdir -p logs || die "cannot create logs directory"
   log_file=$(mktemp "logs/app.XXXXXX") || die "cannot create log file in logs directory"
+  mv -- "$log_file" "$log_file.log" || die "cannot name log file in logs directory"
+  log_file="$log_file.log"
   # exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
   nohup "$MAVEN_HOME/bin/$MVN_CMD" "$@" > "$log_file" 2>&1 </dev/null &
   printf '%s\n' "Maven command started in the background. Log file: $log_file"
