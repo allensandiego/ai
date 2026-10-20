@@ -29,8 +29,8 @@ Single Maven project at repository root: `src/main/java/com/allensandiego/ai/...
 
 **Purpose**: Confirm the existing baseline is sound before any changes; no new dependencies are required per plan.md.
 
-- [ ] T001 Run `./mvnw test` from repository root to confirm the existing build and test suite pass as a pre-change baseline (pom.xml unchanged — security, thymeleaf, validation, data-jpa, and Playwright starters already present)
-- [ ] T002 [P] Verify src/main/resources/schema.sql and src/main/resources/data.sql match the User mapping in specs/001-user-auth/data-model.md (users table: id PK auto-increment, unique username, password, unique email; seeded admin row with a Bcrypt hash) and confirm NO schema changes are required
+- [X] T001 Run `./mvnw test` from repository root to confirm the existing build and test suite pass as a pre-change baseline (pom.xml unchanged — security, thymeleaf, validation, data-jpa, and Playwright starters already present)
+- [X] T002 [P] Verify src/main/resources/schema.sql and src/main/resources/data.sql match the User mapping in specs/001-user-auth/data-model.md (users table: id PK auto-increment, unique username, password, unique email; seeded admin row with a Bcrypt hash) and confirm NO schema changes are required
 
 **Checkpoint**: Baseline green — foundational work can begin.
 
@@ -42,11 +42,11 @@ Single Maven project at repository root: `src/main/java/com/allensandiego/ai/...
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T003 [P] Create User JPA entity in src/main/java/com/allensandiego/ai/model/User.java mapping the existing users table exactly: id Long PK auto-increment; username String not null unique max 255 chars; password String not null max 255 chars (Bcrypt hash only — plaintext never stored); email String not null unique max 255 chars; createdAt Timestamp default current time on insert. Do NOT modify schema.sql
-- [ ] T004 Create UserRepository in src/main/java/com/allensandiego/ai/repository/UserRepository.java extending JpaRepository<User, Long> with existsByUsername(String), existsByEmail(String), and findByUsernameOrEmail(String) returning Optional<User> (depends on T003)
-- [ ] T005 Implement UserService in src/main/java/com/allensandiego/ai/service/UserService.java: loadUserByUsername(String identifier) → UserRepository.findByUsernameOrEmail, map to UserDetails with principal name = stored username, throw UsernameNotFoundException when no match (depends on T004)
-- [ ] T006 Update SecurityConfig in src/main/java/com/allensandiego/ai/config/SecurityConfig.java: register a BCryptPasswordEncoder bean; wire UserService as the UserDetailsService for form login so the "username" form field accepts username OR email; keep the existing permitAll set (login, register, static assets) and anyRequest().authenticated(); add logoutSuccessUrl("/authentication/login") (depends on T005)
-- [ ] T007 [P] Create HomeController in src/main/java/com/allensandiego/ai/controller/HomeController.java with GET / returning the "home" view; create a minimal CoreUI-styled home template showing the authenticated username via Spring Security Thymeleaf integration in src/main/resources/templates/home.html
+- [X] T003 [P] Create User JPA entity in src/main/java/com/allensandiego/ai/model/User.java mapping the existing users table exactly: id Long PK auto-increment; username String not null unique max 255 chars; password String not null max 255 chars (Bcrypt hash only — plaintext never stored); email String not null unique max 255 chars; createdAt Timestamp default current time on insert. Do NOT modify schema.sql
+- [X] T004 Create UserRepository in src/main/java/com/allensandiego/ai/repository/UserRepository.java extending JpaRepository<User, Long> with existsByUsername(String), existsByEmail(String), and findByUsernameOrEmail(String) returning Optional<User> (depends on T003)
+- [X] T005 Implement UserService in src/main/java/com/allensandiego/ai/service/UserService.java: loadUserByUsername(String identifier) → UserRepository.findByUsernameOrEmail, map to UserDetails with principal name = stored username, throw UsernameNotFoundException when no match (depends on T004)
+- [X] T006 Update SecurityConfig in src/main/java/com/allensandiego/ai/config/SecurityConfig.java: register a BCryptPasswordEncoder bean; wire UserService as the UserDetailsService for form login so the "username" form field accepts username OR email; keep the existing permitAll set (login, register, static assets) and anyRequest().authenticated(); add logoutSuccessUrl("/authentication/login") (depends on T005)
+- [X] T007 [P] Create HomeController in src/main/java/com/allensandiego/ai/controller/HomeController.java with GET / returning the "home" view; create a minimal CoreUI-styled home template showing the authenticated username via Spring Security Thymeleaf integration in src/main/resources/templates/home.html
 
 **Checkpoint**: Foundation ready — registration and login can now be implemented and tested end-to-end.
 
