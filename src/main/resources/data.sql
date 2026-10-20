@@ -1,2 +1,2 @@
 insert into users (username, password, email) values
-  ('admin', '$2a$10$R9hazG9A3O1v.g4vSHD8B.B5Y6KevS8k6X1w/gG.6L99J1/D1G8ii', 'admin@demo.com');
+  ('admin', '$2a$10$PIFGI2RwiM78Rk3DTJLENeCUi5M2c8MCnMXtflRH4s40BmvfucQYC', 'admin@demo.com');

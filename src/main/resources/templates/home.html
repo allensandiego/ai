@@ -30,9 +30,13 @@
 
         <div class="card p-4">
           <div class="card-body d-flex flex-column gap-4 text-center">
-            <h2 class="h5">Welcome, <span sec:authentication="property='name'"></span></h2>
+            <h2 class="h5">Welcome, <span th:text="${#authentication.principal}"></span></h2>
           </div>
         </div>
+        <form th:action="@{/authentication/logout}" method="post">
+          <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+          <button type="submit" class="btn btn-outline-secondary">Logout</button>
+        </form>
       </div>
     </div>
   </div>
