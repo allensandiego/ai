@@ -42,3 +42,4 @@ build/
 nohup.out
 app.log
 /data
+/logs
