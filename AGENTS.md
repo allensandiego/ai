@@ -61,6 +61,13 @@ Use the Maven wrapper from the repository root:
 - `./mvnw package` builds the application.
 - `./mvnw spring-boot:run` runs the application.
 
+### Maven wrapper execution behavior (`mvnw`)
+
+The repository's [mvnw](mvnw) script includes custom automation for local runs:
+- **Background execution**: Commands run asynchronously in the background via `nohup` rather than in the foreground.
+- **Log output**: Execution logs (stdout and stderr) are redirected to a generated log file: `logs/app.<ID>.log`. Check or tail the latest file in `logs/` to monitor progress or inspect test results.
+- **Port 8080 cleanup**: When `spring-boot:run` is requested, `mvnw` automatically finds and terminates any active processes listening on port 8080 (`stop_port_8080_processes`) before starting the server.
+
 Build output and generated screenshots belong under `target/`.
 
 ## Development guidelines
