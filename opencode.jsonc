@@ -1,55 +1,33 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "permission": {
-    "external_directory": {
-      "/tmp/**": "allow",
-      "/home/allen/m.2/**": "allow",
-    },
-    "edit": {
-      "pom.xml": "deny",
-      "mvnw": "deny",
-      "mvnw.cmd": "deny",
-      "/home/allen/m.2/**": "deny"
-    }
-  },
-  "provider": {
+  "providers": {
     "lmstudio": {
-      "npm": "@ai-sdk/openai-compatible",
+      "package": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
-      "options": {
+      "settings": {
         "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
         "qwen3.5-9b-mtp": {
           "name": "Qwen3.5 9b",
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
-          },
           "limit": {
             "context": 131072,
-            "input": 98304,
             "output": 32768
+          },
+          "capabilities": {
+            "input": ["text", "image"],
+            "output": ["text"]
           }
         },
         "qwen3.5-4b-mtp@q8_0": {
           "name": "Qwen3.5 4b",
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
-          },
           "limit": {
-            "context": 65536,
-            "input": 49162,
+            "context": 131072,
             "output": 16384
+          },
+          "capabilities": {
+            "input": ["text", "image"],
+            "output": ["text"]
           }
         }
       }
