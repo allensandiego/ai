@@ -1,9 +1,9 @@
 ---
 name: matrix
 description: A specialized sub-agent for writing, refactoring, and structuring raw source code and automation scripts. Invoked when structural code generation or logic implementation is required.
-model: lmstudio/openai/gpt-oss-20b
+model: lmstudio/qwen3.5-4b-mtp@q8_0
 mode: subagent
-temperature: 0.8
+temperature: 0.3
 top_p: 0.95
 top_k: 40
 min_p: 0.0
