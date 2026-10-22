@@ -8,17 +8,6 @@
         "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
-        "qwen3.5-9b-mtp": {
-          "name": "Qwen3.5 9b",
-          "limit": {
-            "context": 131072,
-            "output": 32768
-          },
-          "capabilities": {
-            "input": ["text", "image"],
-            "output": ["text"]
-          }
-        },
         "qwen3.5-4b-mtp@q8_0": {
           "name": "Qwen3.5 4b",
           "limit": {
