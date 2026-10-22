@@ -165,12 +165,16 @@ spring_boot_run_already_running() {
 exec_maven() {
   unset MVNW_VERBOSE MVNW_USERNAME MVNW_PASSWORD MVNW_REPOURL || :
   if spring_boot_run_requested "$@" && spring_boot_run_already_running; then
-    printf '%s\n' "Spring Boot is already running for this project; monitor the app.log file."
+    printf '%s\n' "Spring Boot is already running for this project; monitor the logs directory."
     return 0
   fi
+  mkdir -p logs || die "cannot create logs directory"
+  log_file=$(mktemp "logs/app.XXXXXX") || die "cannot create log file in logs directory"
+  mv -- "$log_file" "$log_file.log" || die "cannot name log file in logs directory"
+  log_file="$log_file.log"
   # exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
-  nohup "$MAVEN_HOME/bin/$MVN_CMD" "$@" > app.log 2>&1 </dev/null &
-  printf '%s\n' "Maven command started in the background; monitor the app.log file."
+  nohup "$MAVEN_HOME/bin/$MVN_CMD" "$@" > "$log_file" 2>&1 </dev/null &
+  printf '%s\n' "Maven command started in the background. Log file: $log_file"
 }
 
 if [ -d "$MAVEN_HOME" ]; then
