@@ -1,5 +1,33 @@
 <!--
-Sync Impact Report (1.0.0 → 1.0.1, 2026-10-19)
+Sync Impact Report (1.0.1 → 1.1.0, 2026-10-20)
+- Version change: 1.0.1 → 1.1.0
+- Modified principles:
+  - II. Convention-Aligned Architecture: formalized the Thymeleaf template
+    hierarchy under `src/main/resources/templates/` (`blank.html`, `index.html`,
+    `authentication/`, `components/`, `error-pages/`) and static asset conventions
+    under `src/main/resources/static/` using standard `th:href` and `th:src` expressions.
+  - III. Data Integrity and Schema Care: updated dev-time schema baseline to reflect
+    in-memory H2 (`jdbc:h2:mem:testdb`) with `ddl-auto=none`, driven explicitly by
+    `schema.sql` and `data.sql`.
+  - IV. Usable and Accessible Server-Rendered UI: established explicit reuse and
+    reference rules for `src/main/resources/templates/`: new pages must reference
+    the base layout (`blank.html`) or dashboard (`index.html`), UI elements must
+    replicate patterns from `components/*.html`, error handling must leverage
+    `error-pages/*.html`, and auth flows must align with `authentication/*.html`.
+- Modified sections:
+  - Technology Baseline: updated database entry to in-memory H2 (`ddl-auto=none`)
+    with dev H2 console enabled; updated UI entry to explicitly list CoreUI 5.x
+    template and component libraries in `src/main/resources/templates/` and static
+    assets in `src/main/resources/static/`.
+  - Quality Gates: updated Gate 5 (UI review) to verify reuse of `src/main/resources/templates/`
+    components/layouts and proper Thymeleaf URL resolution.
+- Added sections: none
+- Removed sections: none
+- Deferred items:
+  - TODO(RATIFICATION_DATE): original adoption date unknown; pending
+    maintainer approval. Update the Version line once confirmed.
+
+Prior sync impact report (1.0.0 → 1.0.1, 2026-10-19)
 - Version change: 1.0.0 → 1.0.1
 - Modified principles:
   - II. Convention-Aligned Architecture: package list corrected to the actual
@@ -65,9 +93,20 @@ depending on individual feature discipline.
 - New layers, packages, or abstractions MUST be justified by a concrete
   need present in the change; empty or speculative layers MUST NOT be
   created "for future use" (YAGNI).
-- Server-rendered pages MUST use the existing Thymeleaf template
-  conventions; new client-side frameworks MUST NOT be introduced without
-  an approved baseline change (see Technology Baseline).
+- Server-rendered pages and UI components MUST reside in
+  `src/main/resources/templates/` and adhere to the established hierarchy:
+  - Base and dashboard layouts: `blank.html` (base admin layout),
+    `index.html` (dashboard reference).
+  - Feature and flow views under dedicated subdirectories (e.g.,
+    `authentication/` for login, registration, and password recovery).
+  - Reusable component references under `components/` (e.g., buttons,
+    cards, tables, modals, alerts, badges, forms).
+  - Standard error templates under `error-pages/` (`404.html`, `500.html`).
+- All template references to static assets (stylesheets, scripts, icons,
+  images) MUST use Thymeleaf URL expressions (`th:href="@{/...}"`,
+  `th:src="@{/...}"`) resolving to `src/main/resources/static/`
+  (`assets/`, `css/`, `js/`). New client-side frameworks MUST NOT be
+  introduced without an approved baseline change (see Technology Baseline).
 - Cross-cutting behavior (security, configuration) MUST use Spring's
   idioms (configuration classes, dependency injection) rather than
   ad-hoc static utilities or manual wiring.
@@ -85,10 +124,10 @@ preserves the framework's safety nets.
 - Schema changes MUST be backward-compatible with existing data within a
   release unless an explicit, documented migration step is included;
   destructive changes (dropping columns/tables, narrowing types) MUST
-  state the migration or recovery plan. The dev-time reset performed by
-  `ddl-auto=create` with re-seeding from `data.sql` on each local start is a
-  documented exception to this rule; any deployment beyond local development
-  MUST use non-destructive DDL plus explicit migrations.
+  state the migration or recovery plan. With `ddl-auto=none`, schema DDL
+  is defined strictly by `schema.sql` and seeded via `data.sql` against the
+  in-memory H2 database (`jdbc:h2:mem:testdb`); any deployment beyond local
+  development MUST use non-destructive DDL plus explicit migrations.
 - Entity mappings MUST match the actual schema (column names, types,
   constraints, and relationships); schema and ORM drift MUST be fixed,
   not papered over with permissive mappings.
@@ -107,16 +146,30 @@ protects data integrity and repeatable startup.
 - Pages MUST use semantic HTML structure and provide labels for inputs,
   alt text for informative images, and sufficient heading hierarchy;
   forms MUST surface validation errors adjacent to the relevant fields.
-- Page templates MUST reuse the existing CoreUI layout, CSS, and static
-  asset conventions; duplicated markup or vendored asset variants MUST
-  NOT be introduced without justification.
+- Page templates MUST reuse or reference the templates and component
+  library located in `src/main/resources/templates/`:
+  - New admin or authenticated views MUST reference or adapt the base page
+    structure from `blank.html` or `index.html` (sidebar navigation, header,
+    content container, footer).
+  - UI components (buttons, cards, tables, modals, alerts, badges, navs,
+    pagination, spinners) MUST replicate the markup patterns and CoreUI
+    classes demonstrated in `src/main/resources/templates/components/*.html`
+    rather than inventing custom CSS or novel HTML markup structures.
+  - Authentication and account flows MUST reference or extend
+    `src/main/resources/templates/authentication/*.html`.
+  - HTTP error handling MUST reference or reuse
+    `src/main/resources/templates/error-pages/` (`404.html`, `500.html`).
+- Duplicated markup or vendored asset variants MUST NOT be introduced;
+  shared static assets in `src/main/resources/static/` (`assets/`, `css/`,
+  `js/`) MUST be referenced via standard Thymeleaf link syntax (`@{/...}`).
 - User-facing flows (login, errors, empty states, confirmations) MUST
   provide clear feedback; raw stack traces or internal identifiers MUST
   NOT be shown to end users.
 
 Rationale: the product surface is server-rendered HTML; accessibility and
 usability discipline at the template level is the cheapest place to
-enforce them.
+enforce them, and referencing existing template components ensures visual
+and structural consistency across the application.
 
 ### V. Relevant, Repeatable Testing
 
@@ -160,9 +213,14 @@ The current, ratified technology baseline is:
 - Language and build: Java 21, Maven (via `./mvnw`), Spring Boot 4.1.1
   parent.
 - Backend: Spring MVC, Spring Security, Spring Data JPA with Hibernate.
-- Database: H2 (embedded, initialized via `schema.sql` / `data.sql`).
+- Database: H2 (in-memory `jdbc:h2:mem:testdb` with `ddl-auto=none`,
+  initialized via `schema.sql` and `data.sql`, with dev console enabled
+  at `/h2-console`).
 - UI: Thymeleaf server-rendered templates with Spring Security
-  integration; CoreUI assets and Chart.js for dashboard rendering.
+  integration; CoreUI 5.x templates and component library located in
+  `src/main/resources/templates/` (`blank.html`, `index.html`,
+  `components/`, `authentication/`, `error-pages/`), CoreUI static assets
+  under `src/main/resources/static/`, and Chart.js for dashboard rendering.
 - Testing: Spring Boot test starters (unit/integration) and Playwright
   for end-to-end browser tests.
 
@@ -194,7 +252,10 @@ Every change MUST satisfy all of the following before merge:
 4. **Data review**: any change to `schema.sql`, `data.sql`, or entity
    mappings is reviewed together against Principle III.
 5. **UI review**: template changes render correctly, reuse existing
-   layouts/assets, and meet Principle IV accessibility expectations.
+   layouts (`blank.html`), components (`components/*.html`), or error views
+   (`error-pages/*.html`) under `src/main/resources/templates/`, resolve
+   static assets using valid Thymeleaf expressions (`@{/...}`), and meet
+   Principle IV accessibility expectations.
 6. **Scope review**: the change is limited per Principle VI; dependency
    additions include justification.
 
@@ -227,6 +288,6 @@ change approval.
 - **Runtime guidance**: day-to-day development conventions (commands,
   layout) live in `AGENTS.md` and MUST NOT contradict this constitution.
 
-**Version**: 1.0.1 | **Ratified**: TODO(RATIFICATION_DATE): original
+**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): original
 adoption date unknown; pending maintainer approval | **Last Amended**:
-2026-10-19
+2026-10-20
