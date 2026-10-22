@@ -1,22 +1,197 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "providers": {
+  "permission": {
+    "external_directory": {
+      "/tmp/**": "allow",
+      "/home/allen/m.2/**": "allow"
+    },
+    "edit": {
+      "mvnw": "deny",
+      "mvnw.cmd": "deny",
+      "/home/allen/m.2/**": "deny"
+    }
+  },
+  "provider": {
     "lmstudio": {
-      "package": "@ai-sdk/openai-compatible",
+      "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
-      "settings": {
+      "options": {
         "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
-        "qwen3.5-4b-mtp@q8_0": {
-          "name": "Qwen3.5 4b",
+        "qwen3.8-27b-gsq-rco@iq3_xxs": {
+          "name": "Qwen3.8 27B",
           "limit": {
             "context": 131072,
             "output": 16384
           },
-          "capabilities": {
-            "input": ["text", "image"],
-            "output": ["text"]
+          "variants": {
+            "xhigh": {
+              "enabled_thinking": true,
+              "reasoning_effort": "xhigh"
+            },
+            "medium": {
+              "enabled_thinking": true,
+              "reasoning_effort": "medium"
+            },
+            "low": {
+              "enabled_thinking": true,
+              "reasoning_effort": "low"
+            },
+            "off": {
+              "enabled_thinking": false,
+              "reasoning_effort": "none"
+            }
+          }
+        },
+        "glm-4.7-flash-reap-23b-a3b": {
+          "name": "GLM4.7 Flash 23b a3b",
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "qwen3.6-35b-a3b-mtp": {
+          "name": "Qwen3.6 35b a3b mtp",
+          "modalities": {
+            "input": ["text", "image", "audio", "video"],
+          },
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "qwen3.6-35b-a3b": {
+          "name": "Qwen3.6 35b a3b",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 65536,
+            "output": 65536
+          }
+        },
+        "qwen/qwen3.5-9b": {
+          "name": "Qwen3.5 9B",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "qwen3.5-9b-mtp": {
+          "name": "Qwen3.5 9B MTP",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "qwen3.5-4b-mtp@q8_0": {
+          "name": "Qwen3.5 4b",
+          "modalities": {
+            "input": ["text", "image", "audio", "video"]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 65536,
+            "output": 16384
+          }
+        },
+        "gemma-4-12b-it": {
+          "name": "Gemma 4 12b",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 16384
+          }
+        },
+        "ornith-1.5-9b": {
+          "name": "Ornith 1.5 9b",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "gemma-4-e4b-it": {
+          "name": "Gemma 4 e4b",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
+          }
+        },
+        "google/gemma-4-26b-a4b-qat": {
+          "name": "Gemma 4 26b A4B QAT",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "input": 49162,
+            "output": 32768
+          }
+        },
+        "openai/gpt-oss-20b": {
+          "name": "GPT OSS 20b",
+          "limit": {
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
           }
         }
       }

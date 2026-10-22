@@ -10,4 +10,10 @@ public class AuthenticationController {
     public String login() {
         return "authentication/login";
     }
+
+    @GetMapping("/authentication/register")
+    public String register() {
+        return "authentication/register";
+    }
+    
 }
