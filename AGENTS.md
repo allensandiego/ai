@@ -1,81 +1,93 @@
-# AGENTS.md
+# Agent Instructions for ai.qwen3.5-4b-q8_0
 
-## Project overview
+## Project Overview
 
-This is a Java 21 Spring Boot application built with Maven. It uses Spring MVC,
-Thymeleaf, Spring Security, Spring Data JPA, and H2.
+Spring Boot 4.1.1 application with Java 21, Thymeleaf, CoreUI admin template, H2 in-memory database, and Spring Security authentication. No email verification—direct login after registration. BCrypt password hashing configured.
 
-## Tech stack
+## Developer Commands
 
-- **Language and build:** Java 21, Maven.
-- **Backend:** Spring Boot 4.1.1, Spring MVC, Spring Security, Spring Data JPA,
-  and Hibernate.
-- **Database:** H2.
-- **Server-rendered UI:** Thymeleaf with Spring Security integration.
-- **Frontend assets:** CoreUI 5.6.1, CSS, and JavaScript; dashboard charts use
-  Chart.js. Reusable templates and components are available under
-  `src/main/resources/templates/`:
-    - **templates/components/*.html** UI components (tables, cards, badges, buttons, modals, etc.).
-    - **templates/blank.html** Base admin layout reference.
-    - **templates/index.html** Dashboard layout and widget reference.
-    - **templates/authentication/*.html** Authentication pages.
-    - **templates/error-pages/*.html** Error pages (404, 500).
-- **Testing:** Spring Boot test starters and Playwright 1.63.0.
-- **Development support:** Spring Boot DevTools and Lombok.
+```bash
+# Run application
+mvnw spring-boot:run
 
-## Project layout
+# Build
+mvnw clean package -DskipTests
 
-```text
-src/                              # Application source and tests
-├── main/                         # Production application
-│   ├── java/                     # Java source code
-│   │   └── com/                  # Java package namespace
-│   │       └── allensandiego/    # Organization package
-│   │           └── ai/           # Application package and entry point
-│   │               ├── config/     # Spring and security configuration
-│   │               └── controller/ # Web request handlers
-│   └── resources/                # Runtime configuration and web resources
-│       ├── static/               # Public static assets
-│       │   ├── assets/           # Icons, brand SVGs, favicons, images
-│       │   ├── css/              # Stylesheets
-│       │   │   └── vendors/      # Third-party stylesheets
-│       │   └── js/               # Browser-side JavaScript
-│       └── templates/            # Thymeleaf page templates
-│           ├── blank.html        # Base admin page layout
-│           ├── index.html        # Dashboard template
-│           ├── authentication/   # Authentication pages (login, register, etc.)
-│           ├── components/       # Reusable UI component references
-│           └── error-pages/      # Error pages (404, 500)
-└── test/                         # Test source code and resources
-    └── java/                     # Java tests
-        └── com/                  # Test Java package namespace
-            └── allensandiego/    # Test organization package
-                └── ai/           # Application tests
+# Test only
+mvnw test
+
+# Run specific test
+mvnw test -Dtest=AiApplicationTests
 ```
 
-## Build and test
+## Architecture & Boundaries
 
-Use the Maven wrapper from the repository root:
+- **Package structure**: `com.allensandiego.ai`
+  - `controller/`: REST and Thymeleaf controllers
+  - `config/`: Security, data sources, validation configs
+  - `service/`: Business logic layer (create as needed)
+  - `repository/`: Data access layer (create as needed)
+  - `entity/`: JPA entities (create as needed)
 
-- `./mvnw test` runs the test suite.
-- `./mvnw package` builds the application.
-- `./mvnw spring-boot:run` runs the application.
+- **Entry points**: 
+  - Main: `AiApplication.java`
+  - Security config: `SecurityConfig.java`
+  - Auth controller: `AuthenticationController.java`
 
-### Maven wrapper execution behavior (`mvnw`)
+## Authentication Flow
 
-The repository's [mvnw](mvnw) script includes custom automation for local runs:
-- **Background execution**: Commands run asynchronously in the background via `nohup` rather than in the foreground.
-- **Log output**: Execution logs (stdout and stderr) are redirected to a generated log file: `logs/app.<ID>.log`. Check or tail the latest file in `logs/` to monitor progress or inspect test results.
-- **Port 8080 cleanup**: When `spring-boot:run` is requested, `mvnw` automatically finds and terminates any active processes listening on port 8080 (`stop_port_8080_processes`) before starting the server.
+1. **Registration** (`/authentication/register.html`) → POST to `/authentication/register`
+2. **Login** (`/authentication/login.html`) → POST to `/authentication/login`
+3. **Logout** (`/authentication/logout`)
+4. No email verification required—users can log in immediately after registration
 
-Build output and generated screenshots belong under `target/`.
+## Security Configuration
 
-## Development guidelines
+- Spring Security 6 with Thymeleaf extras security support
+- Form login at `/authentication/login`
+- H2 console enabled: `spring.h2.console.enabled=true`
+- Database credentials from `application.properties`:
+  ```properties
+  spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+  spring.datasource.username=sa
+  spring.datasource.password=
+  ```
 
-- Follow the existing Java package layout and Spring MVC conventions.
-- Keep tests alongside the existing test package and add or update tests for
-  behavior changes.
-- Check `application.properties`, `schema.sql`, and `data.sql` before changing
-  database behavior.
-- Keep templates, static assets, configuration, and Java code in their
-  corresponding existing directories.
+## Password Security
+
+- BCrypt password hashing (add dependency to pom.xml if not present)
+- Use `PasswordEncoder` bean from Spring Security for password encoding/decoding
+
+## Thymeleaf Templates
+
+Base path for templates: `/templates/`
+- Authentication pages in `templates/authentication/`:
+  - `login.html`, `register.html`, `check-email.html`
+  - `change-password.html`, `reset-password.html`
+  - `password-changed.html`
+
+## Static Assets (CoreUI)
+
+Vendor assets loaded from `/vendors/` directory:
+- CSS: `/css/style.css`, `/js/config.js`, `/js/color-modes.js`
+- Components in `templates/components/`: buttons, cards, modals, tables, etc.
+
+## Testing
+
+- Playwright E2E tests in `src/test/java/com/allensandiego/ai/AiApplicationTests.java`
+- Tests run against random port—use `@LocalServerPort` for dynamic endpoints
+- Screenshot tests save to `target/screenshots/`
+
+## Common Patterns
+
+- Use `@SpringBootApplication` on main class
+- Security filter chain configured in `SecurityConfig.java`
+- Thymeleaf uses `th:href="@{...}"` and `th:src="@{...}"` for static assets
+- CoreUI components loaded from `/vendors/` directory
+
+## Known Constraints
+
+- H2 database is in-memory—data resets on restart
+- No email verification implemented (registration → immediate login)
+- Password hashing via BCrypt (add dependency if not present)
+- Hibernate DDL auto set to `none`—manual schema management required

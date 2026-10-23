@@ -55,7 +55,12 @@
         "qwen3.6-35b-a3b-mtp": {
           "name": "Qwen3.6 35b a3b mtp",
           "modalities": {
-            "input": ["text", "image", "audio", "video"],
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ],
           },
           "limit": {
             "context": 65536,
@@ -114,7 +119,12 @@
         "qwen3.5-4b-mtp@q8_0": {
           "name": "Qwen3.5 4b",
           "modalities": {
-            "input": ["text", "image", "audio", "video"]
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
           },
           "limit": {
             "context": 131072,

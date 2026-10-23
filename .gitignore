@@ -41,5 +41,7 @@ build/
 /target
 nohup.out
 app.log
+/lm_studio_server.log
 /data
 /logs
+/playwright-src
