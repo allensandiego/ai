@@ -43,4 +43,5 @@ nohup.out
 app.log
 /data
 /logs
-/playwright-src
+/playwright-src/youtube
+/youtube
