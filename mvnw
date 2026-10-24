@@ -145,39 +145,14 @@ distributionUrlNameMain="${distributionUrlNameMain%-bin}"
 MAVEN_USER_HOME="${MAVEN_USER_HOME:-${HOME}/.m2}"
 MAVEN_HOME="${MAVEN_USER_HOME}/wrapper/dists/${distributionUrlNameMain-}/$(hash_string "$distributionUrl")"
 
-spring_boot_run_requested() {
-  for argument do
-    [ "$argument" = spring-boot:run ] && return 0
-  done
-  return 1
-}
-
-stop_port_8080_processes() {
-  command -v lsof >/dev/null 2>&1 || die "lsof is required to check port 8080"
-  pids=$(lsof -ti tcp:8080 || :)
-  for pid in $pids; do
-    kill "$pid" 2>/dev/null || die "cannot terminate process $pid on port 8080"
-  done
-}
-
 exec_maven() {
   unset MVNW_VERBOSE MVNW_USERNAME MVNW_PASSWORD MVNW_REPOURL || :
-  if spring_boot_run_requested "$@"; then
-    stop_port_8080_processes
-  fi
-  mkdir -p logs || die "cannot create logs directory"
-  log_file=$(mktemp "logs/app.XXXXXX") || die "cannot create log file in logs directory"
-  mv -- "$log_file" "$log_file.log" || die "cannot name log file in logs directory"
-  log_file="$log_file.log"
-  # exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
-  nohup "$MAVEN_HOME/bin/$MVN_CMD" "$@" > "$log_file" 2>&1 </dev/null &
-  printf '%s\n' "Maven command started in the background. Log file: $log_file"
+  exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
 }
 
 if [ -d "$MAVEN_HOME" ]; then
   verbose "found existing MAVEN_HOME at $MAVEN_HOME"
   exec_maven "$@"
-  exit 0
 fi
 
 case "${distributionUrl-}" in
