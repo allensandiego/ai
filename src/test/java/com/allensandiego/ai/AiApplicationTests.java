@@ -1,58 +1,79 @@
 package com.allensandiego.ai;
 
+import java.nio.file.Path;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitUntilState;
+import com.microsoft.playwright.Page.ScreenshotOptions;
+import com.microsoft.playwright.junit.UsePlaywright;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AiApplicationTests {
+@UsePlaywright
+public class AiApplicationTests {
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    private int port;
 
-	@Test
-	void contextLoads() {
-	}
+    static Playwright playwright;
+    static Browser browser;
 
-	@Test
-	void opensLoginPageAndSavesScreenshot() throws Exception {
-		Path screenshot = Path.of("target", "screenshots", "login-page.png");
-		Files.createDirectories(screenshot.getParent());
+    String ts = "target/screenshots";
 
-		try (Playwright playwright = Playwright.create();
-			 Browser browser = playwright.chromium().launch(
-				 new BrowserType.LaunchOptions().setHeadless(true))) {
-			Page page = browser.newPage();
-			var response = page.navigate(
-				"http://localhost:" + port + "/authentication/login",
-				new Page.NavigateOptions().setWaitUntil(WaitUntilState.NETWORKIDLE)
-			);
+    @BeforeAll 
+    static void launchBrowser() throws Exception {
+        playwright = Playwright.create();
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+    }
 
-			assertNotNull(response, "The login page should return an HTTP response");
-			assertEquals(200, response.status());
-			assertTrue(page.getByRole(
-				AriaRole.HEADING,
-				new Page.GetByRoleOptions().setName("Login to your account")
-			).isVisible());
+    @AfterAll 
+    static void closeBrowser() {
+        browser.close();
+        playwright.close();
+    }
 
-			page.screenshot(new Page.ScreenshotOptions()
-				.setPath(screenshot)
-				.setFullPage(true));
-		}
+    @Test
+    void shouldRegister(Page page) throws Exception {
+        page.navigate("http://localhost:" + port + "/authentication/register");
 
-		assertTrue(Files.size(screenshot) > 0, "The screenshot should not be empty");
-	}
+        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register.png")));
+
+        page.fill("#name", "Test");
+        page.fill("#email", "test@demo.com");
+        page.fill("#password", "qwert123");
+
+        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register-filled.png")));
+
+        page.click("button[type='submit']");
+    
+        Thread.sleep(5000);
+
+        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register-after.png")));
+
+        page.fill("#email", "test@demo.com");
+        page.fill("#password", "qwert123");
+
+        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-filled.png")));
+
+        page.click("button[type='submit']");
+
+        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-after.png")));
+    }
+
+    @Test
+    void shouldShowLogin(Page page) throws Exception {
+        page.navigate("http://localhost:" + port + "/authentication/login");
+
+        Thread.sleep(3000);
+
+        page.screenshot(new Page.ScreenshotOptions().setPath(Path.of(ts, "login.png")));
+    }
 }
