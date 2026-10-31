@@ -3,6 +3,7 @@ name: architect
 description: Delegates tasks to sub-agents
 mode: primary
 permission:
+    write: deny
     edit:
         "*": deny
         "*.md": allow
