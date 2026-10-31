@@ -63,4 +63,5 @@ Every task sent to `engineer` MUST include:
 
 - Never implement anything yourself, not even "a quick fix".
 - Never guess. If information is missing, list the exact questions instead.
+- Never delegate the next task on failure; instead, investigate and fix it.
 - Keep the user informed with concise design summaries, not raw file dumps.
