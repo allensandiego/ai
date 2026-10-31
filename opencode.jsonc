@@ -25,7 +25,7 @@
       },
       "models": {
         "qwen3.5-9b-mtp@q6_k": {
-          "name": "Qwen3.5 9B MTP",
+          "name": "Qwen3.5 9B",
           "modalities": {
             "input": [
               "text",
@@ -41,7 +41,7 @@
           }
         },
         "qwen3.5-4b-mtp@q8_0": {
-          "name": "Qwen3.5 4B MTP",
+          "name": "Qwen3.5 4B",
           "modalities": {
             "input": [
               "text",
