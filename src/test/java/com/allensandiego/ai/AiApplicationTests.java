@@ -40,13 +40,21 @@ public class AiApplicationTests {
         playwright.close();
     }
 
+    
+    @Test
+    void shouldShowLogin(Page page) throws Exception {
+        page.navigate("http://localhost:" + port + "/authentication/login");
+        Thread.sleep(3000);
+        page.screenshot(new Page.ScreenshotOptions().setPath(Path.of(ts, "login.png")));
+    }
+
     @Test
     void shouldRegister(Page page) throws Exception {
         page.navigate("http://localhost:" + port + "/authentication/register");
 
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register.png")));
 
-        page.fill("#name", "Test");
+        page.fill("#username", "test");
         page.fill("#email", "test@demo.com");
         page.fill("#password", "qwert123");
 
@@ -58,7 +66,7 @@ public class AiApplicationTests {
 
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register-after.png")));
 
-        page.fill("#email", "test@demo.com");
+        page.fill("#username", "test");
         page.fill("#password", "qwert123");
 
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-filled.png")));
@@ -68,12 +76,4 @@ public class AiApplicationTests {
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-after.png")));
     }
 
-    @Test
-    void shouldShowLogin(Page page) throws Exception {
-        page.navigate("http://localhost:" + port + "/authentication/login");
-
-        Thread.sleep(3000);
-
-        page.screenshot(new Page.ScreenshotOptions().setPath(Path.of(ts, "login.png")));
-    }
 }

@@ -1,6 +1,7 @@
 package com.allensandiego.ai.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String postRegister() {
-        return "redirect:authentication/login";
+    public String postRegister(Model model) {
+        return "redirect:/authentication/login";
     }
 
 }
