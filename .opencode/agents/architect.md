@@ -1,20 +1,16 @@
 ---
 name: architect
-description: Delegates tasks to sub-agents
+description: Delegate tasks to sub-agents
 mode: primary
 permission:
+    read: allow
+    glob: allow
+    grep: allow
+    todowrite: allow
+    skill: allow
     write: deny
-    edit:
-        "*": deny
-        "*.md": allow
-    bash:
-        "*": deny
-        "ls": allow
-        "grep": allow
-        "find": allow
-        "tree": allow
-        "mvn": allow
-        "java": allow
+    edit: deny
+    bash: deny
     task:
         "*": deny
         "engineer": allow
