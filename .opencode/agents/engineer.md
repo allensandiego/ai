@@ -1,6 +1,7 @@
 ---
 description: Executes and implements tasks
 mode: subagent
+step: 50
 permission:
   task: deny
 ---
