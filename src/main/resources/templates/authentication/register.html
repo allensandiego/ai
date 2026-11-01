@@ -64,7 +64,7 @@
                 <form class="row gap-3 text-start" th:action="@{/authentication/register}" method="post" autocomplete="off" novalidate>
                     <div th:if="${param.error}" class="alert alert-danger">
                         <a href="#" onclick="this.parentElement.remove()" class="alert-link">&times;</a>
-                        Email already registered. Please use a different email or login.
+                        Username already registered. Please use a different username or login.
                     </div>
                 <div>
                   <label class="form-label" for="name">Username</label>
