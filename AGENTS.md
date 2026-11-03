@@ -2,8 +2,6 @@
 
 ## Project Structure
 
-Project Root Directory **/home/allen/workspace/ai**
-
 ```text
 /home/allen/workspace/ai
 ├── pom.xml
