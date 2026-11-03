@@ -1,6 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": true,
+  "instructions": ["AGENTS.md"],
   "experimental": {
     "disable_paste_summary": true
   },
@@ -24,7 +25,7 @@
         "baseURL": "http://amd.lan:1234/v1"
       },
       "models": {
-        "qwen3.5-9b-mtp@q6_k": {
+        "qwen3.5-9b-mtp@q8_0": {
           "name": "Qwen3.5 9B",
           "modalities": {
             "input": [
@@ -54,27 +55,6 @@
             "context": 262144,
             "input": 196608,
             "output": 65536
-          }
-        },
-<<<<<<< HEAD
-        "qwen3.6-35b-a3b-mtp": {
-          "name": "Qwen3.6 35B A3B",
-=======
-        "qwen3.8-27b": {
-          "name": "Qwen3.8 27B",
->>>>>>> aafbfc5 (doc: Remove model reference and add Qwen3.8 27B configuration in opencode.jsonc)
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
-          },
-          "limit": {
-            "context": 65536,
-            "input": 32768,
-            "output": 16384
           }
         }
       }
