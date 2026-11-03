@@ -2,7 +2,7 @@
 
 ## Project Structure
 ```text
-.
+/home/allen/workspace/ai
 ├── pom.xml
 ├── opencode.jsonc
 ├── .mvn/wrapper/maven-wrapper.properties

@@ -55,6 +55,22 @@
             "input": 196608,
             "output": 65536
           }
+        },
+        "qwen3.6-35b-a3b-mtp": {
+          "name": "Qwen3.6 35B A3B",
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "limit": {
+            "context": 65536,
+            "input": 65536,
+            "output": 8092
+          }
         }
       }
     }
