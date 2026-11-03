@@ -1,9 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": true,
-  "model": "lmstudio/qwen3.5-9b-mtp@q6_k",
   "experimental": {
-    "disable_paste_summary": true,
+    "disable_paste_summary": true
   },
   "permission": {
     "external_directory": {
@@ -13,7 +12,8 @@
     "edit": {
       "mvnw": "deny",
       "mvnw.cmd": "deny",
-      "/home/allen/m.2/**": "deny"
+      "/home/allen/m.2/**": "deny",
+      "pom.xml": "deny"
     }
   },
   "provider": {
@@ -56,8 +56,13 @@
             "output": 65536
           }
         },
+<<<<<<< HEAD
         "qwen3.6-35b-a3b-mtp": {
           "name": "Qwen3.6 35B A3B",
+=======
+        "qwen3.8-27b": {
+          "name": "Qwen3.8 27B",
+>>>>>>> aafbfc5 (doc: Remove model reference and add Qwen3.8 27B configuration in opencode.jsonc)
           "modalities": {
             "input": [
               "text",
@@ -68,8 +73,8 @@
           },
           "limit": {
             "context": 65536,
-            "input": 65536,
-            "output": 8092
+            "input": 32768,
+            "output": 16384
           }
         }
       }
