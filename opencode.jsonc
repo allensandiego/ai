@@ -7,7 +7,7 @@
   "permission": {
     "external_directory": {
       "/tmp/**": "allow",
-      "/home/allen/m.2/**": "allow"
+      "/home/allen/.m2/**": "allow"
     },
     "edit": {
       "mvnw": "deny",
@@ -16,6 +16,7 @@
       "pom.xml": "deny"
     }
   },
+  "model": "lmstudio/qwen3.8-27b-gsq-rco@iq2_s",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
@@ -56,13 +57,8 @@
             "output": 65536
           }
         },
-<<<<<<< HEAD
-        "qwen3.6-35b-a3b-mtp": {
-          "name": "Qwen3.6 35B A3B",
-=======
-        "qwen3.8-27b": {
+        "qwen3.8-27b-gsq-rco@iq2_s": {
           "name": "Qwen3.8 27B",
->>>>>>> aafbfc5 (doc: Remove model reference and add Qwen3.8 27B configuration in opencode.jsonc)
           "modalities": {
             "input": [
               "text",
@@ -72,9 +68,9 @@
             ]
           },
           "limit": {
-            "context": 65536,
-            "input": 32768,
-            "output": 16384
+            "context": 131072,
+            "input": 98304,
+            "output": 32768
           }
         }
       }
