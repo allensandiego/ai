@@ -71,6 +71,18 @@
             "context": 131072,
             "input": 98304,
             "output": 32768
+          },
+          "capabilities": {
+            "temperature": true,
+            "reasoning": {
+              "support": true,
+              "toggle": true,
+              "effort": [
+                "low",
+                "medium",
+                "xhigh"
+              ]
+            }            
           }
         }
       }
