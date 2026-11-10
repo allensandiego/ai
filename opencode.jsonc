@@ -28,12 +28,7 @@
         "qwen3.5-9b-mtp@q6_k": {
           "name": "Qwen3.5 9B",
           "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
+            "input": ["text", "image", "audio", "video"]
           },
           "limit": {
             "context": 131072,
@@ -44,12 +39,7 @@
         "qwen3.5-4b-mtp@q8_0": {
           "name": "Qwen3.5 4B",
           "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
+            "input": ["text", "image", "audio", "video"]
           },
           "limit": {
             "context": 262144,
@@ -59,30 +49,38 @@
         },
         "qwen3.8-27b-gsq-rco@iq2_s": {
           "name": "Qwen3.8 27B",
+          "max_tokens": 98304,
           "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
+            "input": ["text", "image", "audio", "video"]
           },
           "limit": {
             "context": 131072,
             "input": 98304,
             "output": 32768
           },
-          "capabilities": {
-            "temperature": true,
-            "reasoning": {
-              "support": true,
-              "toggle": true,
-              "effort": [
-                "low",
-                "medium",
-                "xhigh"
-              ]
-            }            
+          "variants": {
+            "none": {
+              "reasoningEffort": "none"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoning_budget_tokens": 512
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoning_budget_tokens": 2048
+            },
+            "xhigh": {
+              "reasoningEffort": "xhigh",
+              "reasoning_budget_tokens": 8192
+            },
+            "xhigh-no-preserve": {
+              "reasoningEffort": "xhigh",
+              "reasoning_budget_tokens": 8192,
+              "chat_template_kwargs": {
+                "preserve_thinking": false
+              }
+            }
           }
         }
       }
