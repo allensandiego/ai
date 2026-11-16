@@ -73,6 +73,8 @@ public class AiApplicationTests {
 
         page.click("button[type='submit']");
 
+        Thread.sleep(5000);
+
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-after.png")));
     }
 
