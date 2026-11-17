@@ -57,7 +57,7 @@
             "output": 65536
           }
         },
-        "qwen3.8-27b-gsq-rco@iq2_s": {
+        "qwen3.8-27b@iq3_xxs": {
           "name": "Qwen3.8 27B",
           "modalities": {
             "input": [
@@ -68,9 +68,9 @@
             ]
           },
           "limit": {
-            "context": 131072,
-            "input": 98304,
-            "output": 32768
+            "context": 81929,
+            "input": 65536,
+            "output": 16384
           }
         }
       }
