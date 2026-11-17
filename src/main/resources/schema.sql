@@ -20,6 +20,7 @@ create table users (
     id bigint generated always as identity primary key,
     username varchar(30) not null unique,
     password varchar(255) not null, -- Bcrypt hashed passwords
+    email varchar(255),
     enabled boolean not null default true,
     authorities varchar(255),
     -- Timestamps

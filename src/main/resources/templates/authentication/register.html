@@ -62,9 +62,10 @@
             <div class="card-body d-flex flex-column gap-4">
               <h2 class="h5 text-center">Create new account</h2>
                 <form class="row gap-3 text-start" th:action="@{/authentication/register}" method="post" autocomplete="off" novalidate>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <div th:if="${param.error}" class="alert alert-danger">
                         <a href="#" onclick="this.parentElement.remove()" class="alert-link">&times;</a>
-                        Email already registered. Please use a different email or login.
+                        Registration failed. Please check your details and try again.
                     </div>
                 <div>
                   <label class="form-label" for="name">Username</label>
