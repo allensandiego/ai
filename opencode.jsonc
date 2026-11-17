@@ -16,7 +16,7 @@
       "pom.xml": "deny"
     }
   },
-  "model": "lmstudio/qwen3.8-27b-gsq-rco@iq2_s",
+  "model": "lmstudio/qwen3.8-27b@iq3_xxs",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
