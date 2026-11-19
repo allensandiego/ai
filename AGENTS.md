@@ -3,7 +3,7 @@
 ## Project Structure
 
 ```text
-/home/allen/workspace/ai
+project-root
 ├── pom.xml
 ├── opencode.jsonc
 ├── .mvn/wrapper/maven-wrapper.properties
@@ -22,7 +22,7 @@
     │       ├── data.sql
     │       ├── schema.sql
     │       ├── static/        # assets, css, js, vendors (CoreUI template assets)
-    │       └── templates/     # Thymeleaf views (authentication, components, error-pages, forms, blank.html, index.html)
+    │       └── templates/     # Thymeleaf views (authentication, components, error-pages, forms, dashboard.html, index.html)
     └── test/
         └── java/com/allensandiego/ai/
             └── AiApplicationTests.java  # Playwright integration tests
@@ -52,7 +52,7 @@
   - Logging levels: `DEBUG` for datasource init and Hibernate SQL, `TRACE` for JDBC parameter binding
   - H2 console: `spring.h2.console.enabled=true`
 - Schema (`src/main/resources/schema.sql`):
-  - Tables: `roles` (id, code, name, description, enabled, timestamps), `users` (id, username, password, enabled, authorities, timestamps), `user_roles` (id, user_id, role_id, enabled, timestamps)
+  - Tables: `roles` (id, code, name, description, enabled, timestamps), `users` (id, username, password, email, enabled, authorities, timestamps), `user_roles` (id, user_id, role_id, enabled, timestamps)
 - Seed Data (`src/main/resources/data.sql`):
   - Initial roles: `ROLE_ADMIN`, `ROLE_USER`
 
@@ -77,19 +77,25 @@
 - `AuthenticationController` (`/authentication`):
   - `GET /authentication/login` -> view `authentication/login`
   - `GET /authentication/register` -> view `authentication/register`
-  - `POST /authentication/register` -> redirects to `/authentication/login`
+  - Registration currently has no POST handler; form submission is not implemented.
 - `HomeController`:
   - `GET /` -> view `index`
-  - `GET /dashboard` -> view `blank`
+  - `GET /dashboard` -> view `dashboard`
 
 ## Tests (Playwright)
 - `src/test/java/com/allensandiego/ai/AiApplicationTests.java`:
   - `@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)`, `@UsePlaywright`
-  - Headless Chromium launched via Playwright in `@BeforeAll`, closed in `@AfterAll`.
-  - Screenshots output path: `target/screenshots/`
-  - Test cases:
-    - `shouldShowLogin`: Navigates to `/authentication/login`, waits 3s, captures `login.png`.
-    - `shouldRegister`: Navigates to `/authentication/register` (`register.png`), fills registration fields (`register-filled.png`), submits form, waits 5s (`register-after.png`), fills login form (`login-filled.png`), submits form, captures final view (`login-after.png`).
+  - Playwright's JUnit extension provides the browser page for each test.
+  - Smoke tests verify that the login and registration pages render and that unauthenticated access to `/dashboard` redirects to the login page.
+  - Screenshots are saved under `target/screenshots/`: `login.png`, `register.png`, and `dashboard-redirect-login.png`.
+  - Account creation and authenticated-login flows are not currently tested; registration has no POST handler and no test user is seeded.
+
+## Guidance for Future Changes
+- Treat this repository as a Spring Boot starter scaffold, not a feature-complete application. Confirm behavior in code before assuming a template or route is fully implemented.
+- Follow the existing package structure and Spring MVC, Thymeleaf, and Spring Security patterns. Keep changes focused and avoid adding dependencies or abstractions unless the feature needs them.
+- Implement new features end to end, including validation, security, persistence, UI, and focused tests where applicable.
+- For Playwright UI tests, save screenshots under `target/screenshots/` before assertions so failed assertions still leave visual evidence. After running tests, inspect the screenshots as well as the test results; keep filenames documented here when they change.
+- Update this guide when project structure, configuration, routes, or current implementation status changes.
 
 ## Dependency Tree
 

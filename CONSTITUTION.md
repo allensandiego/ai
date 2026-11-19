@@ -1,5 +1,16 @@
 # Spring Boot + Thymeleaf Constitution (Non-Negotiable)
 
+## Scope
+- These rules govern new code and code changed for a feature; they do not imply that the starter scaffold already satisfies every rule.
+- Current scaffold exceptions are listed below. Do not copy these exceptions into new implementations.
+- When a feature touches an excepted area, follow the applicable rules here. If compliance requires broad migration work or a new dependency, clarify the scope and ask before adding the dependency.
+
+## Current Scaffold Exceptions
+- Database initialization currently uses `schema.sql` and `data.sql` with `spring.jpa.hibernate.ddl-auto=create-drop`; Flyway/Liquibase migrations are not configured.
+- `spring.jpa.open-in-view` is not explicitly disabled.
+- Error templates currently live in `templates/error-pages/`; a `@ControllerAdvice` error handler is not present.
+- The current test suite contains Playwright smoke tests; it does not yet include `@WebMvcTest` coverage or service unit tests.
+
 ## 1. Architecture & MVC Layering
 - **Strict Layering:** Web Controllers (`@Controller`) may only call Services (`@Service`). Never inject Repositories directly into Controllers.
 - **View Models / Form DTOs:** Never bind JPA `@Entity` classes directly to Thymeleaf forms (`th:object`). Always use dedicated Form DTOs with Bean Validation (`@Valid`, `@NotBlank`, etc.).

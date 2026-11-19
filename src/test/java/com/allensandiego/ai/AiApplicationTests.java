@@ -1,83 +1,63 @@
 package com.allensandiego.ai;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Page.ScreenshotOptions;
 import com.microsoft.playwright.junit.UsePlaywright;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @UsePlaywright
 public class AiApplicationTests {
 
+    private static final Path SCREENSHOT_DIRECTORY = Path.of("target", "screenshots");
+
     @LocalServerPort
     private int port;
 
-    static Playwright playwright;
-    static Browser browser;
-
-    String ts = "target/screenshots";
-
-    @BeforeAll 
-    static void launchBrowser() throws Exception {
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+    private String baseUrl() {
+        return "http://localhost:" + port;
     }
 
-    @AfterAll 
-    static void closeBrowser() {
-        browser.close();
-        playwright.close();
-    }
-
-    
-    @Test
-    void shouldShowLogin(Page page) throws Exception {
-        page.navigate("http://localhost:" + port + "/authentication/login");
-        assert(page.title().equals("Login"));
-        page.screenshot(new Page.ScreenshotOptions().setPath(Path.of(ts, "login.png")));
+    private void captureScreenshot(Page page, String filename) throws IOException {
+        Files.createDirectories(SCREENSHOT_DIRECTORY);
+        page.screenshot(new Page.ScreenshotOptions().setPath(SCREENSHOT_DIRECTORY.resolve(filename)));
     }
 
     @Test
-    void shouldRegister(Page page) throws Exception {
-        page.navigate("http://localhost:" + port + "/authentication/register");
-        assert(page.title().equals("Register"));
+    void shouldShowLogin(Page page) throws IOException {
+        page.navigate(baseUrl() + "/authentication/login");
+        captureScreenshot(page, "login.png");
 
-        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register.png")));
+        assertEquals("Login", page.title());
+        assertTrue(page.locator("#username").isVisible());
+    }
 
-        page.fill("#username", "test");
-        page.fill("#email", "test@demo.com");
-        page.fill("#password", "qwert123");
+    @Test
+    void shouldShowRegistration(Page page) throws IOException {
+        page.navigate(baseUrl() + "/authentication/register");
+        captureScreenshot(page, "register.png");
 
-        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register-filled.png")));
+        assertEquals("Register", page.title());
+        assertTrue(page.locator("#email").isVisible());
+    }
 
-        page.click("button[type='submit']");
-    
-        assert(page.url().equals("http://localhost:" + port + "/authentication/login"));
+    @Test
+    void shouldRequireAuthenticationForDashboard(Page page) throws IOException {
+        page.navigate(baseUrl() + "/dashboard");
+        captureScreenshot(page, "dashboard-redirect-login.png");
 
-        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register-after.png")));
-
-        page.fill("#username", "test");
-        page.fill("#password", "qwert123");
-
-        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-filled.png")));
-
-        page.click("button[type='submit']");
-
-        assert(page.url().equals("http://localhost:" + port + "/dashboard"));
-        assert(page.title().equals("Dashboard"));
-
-        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "dashboard.png")));
+        assertEquals(baseUrl() + "/authentication/login", page.url());
+        assertEquals("Login", page.title());
     }
 
 }
