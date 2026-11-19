@@ -20,9 +20,4 @@ public class AuthenticationController {
         return "authentication/register";
     }
 
-    @PostMapping("/register")
-    public String postRegister(Model model) {
-        return "redirect:/authentication/login";
-    }
-
 }

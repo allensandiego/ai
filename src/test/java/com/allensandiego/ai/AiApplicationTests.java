@@ -44,13 +44,14 @@ public class AiApplicationTests {
     @Test
     void shouldShowLogin(Page page) throws Exception {
         page.navigate("http://localhost:" + port + "/authentication/login");
-        Thread.sleep(3000);
+        assert(page.title().equals("Login"));
         page.screenshot(new Page.ScreenshotOptions().setPath(Path.of(ts, "login.png")));
     }
 
     @Test
     void shouldRegister(Page page) throws Exception {
         page.navigate("http://localhost:" + port + "/authentication/register");
+        assert(page.title().equals("Register"));
 
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register.png")));
 
@@ -62,7 +63,7 @@ public class AiApplicationTests {
 
         page.click("button[type='submit']");
     
-        Thread.sleep(5000);
+        assert(page.url().equals("http://localhost:" + port + "/authentication/login"));
 
         page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "register-after.png")));
 
@@ -73,7 +74,10 @@ public class AiApplicationTests {
 
         page.click("button[type='submit']");
 
-        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "login-after.png")));
+        assert(page.url().equals("http://localhost:" + port + "/dashboard"));
+        assert(page.title().equals("Dashboard"));
+
+        page.screenshot(new ScreenshotOptions().setPath(Path.of(ts, "dashboard.png")));
     }
 
 }
