@@ -1,5 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "CONSTITUTION.md"
+  ],
   "lsp": true,
   "experimental": {
     "disable_paste_summary": true

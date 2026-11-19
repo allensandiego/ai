@@ -37,8 +37,7 @@
 - Dev-only: Spring Boot DevTools, H2 console enabled.
 - Testing: JUnit 5, Spring Boot Test, Playwright 1.63.0 for end-to-end browser integration tests.
 
-## Dependencies/Build/Test Commands
-- Dependency: `mvn dependency:tree`
+## Build/Test Commands
 - Build: `mvn compile`
 - Test: `mvn test`
 - Run app: `mvn spring-boot:run`
