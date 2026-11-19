@@ -15,11 +15,11 @@
     "edit": {
       "mvnw": "deny",
       "mvnw.cmd": "deny",
-      "/home/allen/m.2/**": "deny",
+      "/home/allen/.m2/**": "deny",
       "pom.xml": "deny"
     }
   },
-  "model": "lmstudio/qwen3.8-27b-gsq-rco@iq2_s",
+  "model": "lmstudio/qwen3.5-9b-mtp@q6_k",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
@@ -42,38 +42,6 @@
             "context": 131072,
             "input": 98304,
             "output": 16384
-          }
-        },
-        "qwen3.5-4b-mtp@q8_0": {
-          "name": "Qwen3.5 4B",
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
-          },
-          "limit": {
-            "context": 262144,
-            "input": 196608,
-            "output": 65536
-          }
-        },
-        "qwen3.8-27b-gsq-rco@iq2_s": {
-          "name": "Qwen3.8 27B",
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video"
-            ]
-          },
-          "limit": {
-            "context": 131072,
-            "input": 98304,
-            "output": 32768
           }
         }
       }
